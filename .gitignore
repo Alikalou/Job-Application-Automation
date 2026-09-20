@@ -1,0 +1,6 @@
+node_modules/
+.env
+data/cv.txt
+
+data/stc-auth.json
+data/cv.pdf
