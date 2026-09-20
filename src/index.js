@@ -10,7 +10,9 @@ import { parseCv } from "./parseCv.js";
 import { applicantDetails } from "../data/applicant.js";
 import { matchJob } from "./matchJob.js";
 import { applyToStcJob } from "./stc/stcApplicationAgent.js";
-
+import { handleCandidateProfile } from "./stc/stcForm.js";
+import { generateCoverLetter } from "./coverLetter.js";
+import { saveRunLog, buildRunLog } from "./logging.js";
 
 const browser = await chromium.launch({
     headless: false,
@@ -23,6 +25,8 @@ try {
     const context = await authenticateStc(
         browser
     );
+
+    const page = context.pages()[0];
 
     console.log(
         "1. Authentication finished."
@@ -83,27 +87,26 @@ try {
      */
     const applicant = {
         cv: parsedCv,
-        personal:
-            applicantDetails.personal,
-        languages:
-            applicantDetails.languages,
-        stcSpecific:
-            applicantDetails.stcSpecific,
+        personal: applicantDetails.personal,
+        languages: applicantDetails.languages,
+        stcSpecific: applicantDetails.stcSpecific,
         cvPdfPath,
-        coverLetterPath,
     };
 
     console.log(
         "6. Applicant object created."
     );
 
+    console.log("Filling Candidate Profile...");
+
+    await handleCandidateProfile(page, applicant);
+
+    console.log("Filled Candidate Profile");
 
     /*
      * Fetch STC jobs.
      */
-    console.log(
-        "7. Fetching STC jobs..."
-    );
+    console.log("7. Fetching STC jobs...");
 
     const stcJobs = await getStcJobs();
 
@@ -160,13 +163,9 @@ try {
             matchedJobs.slice(0, 5);
 
         if (!jobsToApply.length) {
-            console.log(
-                "No qualified jobs to apply to."
-            );
+            console.log("No qualified jobs to apply to.");
         } else {
-            console.log(
-                `11. Starting applications for ${jobsToApply.length} job(s)...`
-            );
+            console.log(`11. Starting applications for ${jobsToApply.length} job(s)...`);
 
 
             /*
@@ -199,19 +198,17 @@ try {
                     "--------------------------------"
                 );
 
-                const result =
-                    await applyToStcJob(
-                        context,
-                        job,
-                        applicant,
-                        {
-                            dryRun: true,
-                        }
-                    );
+                console.log("JOB SENT TO GENERATOR:");
 
-                applicationResults.push(
-                    result
-                );
+
+                const coverLetter = await generateCoverLetter(applicant, job);
+
+                const application = { job, coverLetter }
+
+
+                const result = await applyToStcJob(context, applicant, application);
+
+                applicationResults.push(result);
 
                 console.log(
                     `Finished: ${job.title}`
@@ -228,6 +225,16 @@ try {
                 "\n12. Application agent finished."
             );
 
+            const runLog = buildRunLog(
+                "STC",
+                stcJobs,
+                matchedJobs,
+                jobsToApply,
+                applicationResults
+            );
+
+            await saveRunLog(runLog);
+
             console.log(
                 "Application results:"
             );
@@ -235,6 +242,8 @@ try {
             console.log(
                 applicationResults
             );
+
+
         }
     }
 

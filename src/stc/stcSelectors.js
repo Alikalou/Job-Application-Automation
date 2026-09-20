@@ -93,11 +93,11 @@ export const STC_SELECTORS = {
     otherInstitution:
         'input[name="custOtherSchool"]',
 
-    gradeMeasurement:
+    gradingScale:
         'input[aria-label="How was your grade measured?"]',
 
     grade:
-        'input[name="grade"]',
+        'input[name="FFLD2"]',
 
     educationStartDate:
         'ui5-date-picker-xweb-calendar-widget[title="Start Date"] input[aria-label="Start Date"]',
@@ -158,6 +158,7 @@ export const STC_SELECTORS = {
         'input[name="custConfirmCommittee"]',
 
 
+    // Save button        
     saveButton:
         '.rcmAppBtnWrapper [id$="_saveBtn"]',
 

@@ -15,7 +15,9 @@ const relevantTitles = [
     "full stack",
     "database",
     "Security Design & Implementation Expert",
-    "Data science"
+    "Data science",
+    "Medical Insurance",
+    "Succession Planning"
 ];
 
 

@@ -47,10 +47,11 @@ export async function parseCv(cvText) {
                     "degree": string | null,
                     "major": string | null,
                     "institution": string | null,
-                    "location": string | null,
+                    "gradingScale": string | null,
+                    "grade": string | null,
                     "startDate": string | null,
                     "endDate": string | null,
-                    "description": string | null
+                    
                 }
             ],
 

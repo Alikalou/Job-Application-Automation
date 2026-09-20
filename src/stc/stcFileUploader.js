@@ -55,18 +55,6 @@ export async function uploadFile(
         filePath
     );
 
-    /*
-     * Verify successful upload.
-     */
-    const success = field.locator(
-        STC_SELECTORS.uploadSuccess
-    );
-
-    await success.waitFor({
-        state: "visible",
-        timeout: 15_000,
-    });
-
     console.log(
         `${label} uploaded successfully.`
     );

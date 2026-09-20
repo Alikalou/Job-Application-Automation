@@ -69,7 +69,5 @@ export async function authenticateStc(browser) {
         path: AUTH_PATH,
     });
 
-    await page.close();
-
     return context;
 }

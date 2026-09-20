@@ -178,8 +178,9 @@ export const EDUCATION_FIELDS = [
     },
     {
         type: "combobox",
-        selector: STC_SELECTORS.gradeMeasurement,
-        key: "gradeMeasurement",
+        selector: STC_SELECTORS.gradingScale,
+        key: "gradingScale",
+        transform: value => `0 - ${value}`
     },
     {
         type: "input",

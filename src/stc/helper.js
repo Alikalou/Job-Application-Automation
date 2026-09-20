@@ -1,5 +1,23 @@
 import { STC_SELECTORS } from "./stcSelectors.js";
 
+
+export async function expandAllSections(page) {
+    const expandAllButton = page.locator(
+        'a[id$="_expandAllSections"]'
+    );
+
+    await expandAllButton.waitFor({
+        state: "visible",
+        timeout: 15_000,
+    });
+
+    console.log("Expanding all sections...");
+
+    await expandAllButton.click();
+
+    console.log("All sections expanded.");
+}
+
 export async function ensureLanguageRows(
     page,
     languageCount
