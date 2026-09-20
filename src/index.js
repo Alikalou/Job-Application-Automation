@@ -5,6 +5,7 @@ import path from "path";
 import { chromium } from "playwright";
 
 import { authenticateStc } from "./stc/stcAuth.js";
+import { authenticate } from "./auth.js";
 import { getStcJobs } from "./companies/stc.js";
 import { parseCv } from "./parseCv.js";
 import { applicantDetails } from "../data/applicant.js";
@@ -22,9 +23,21 @@ try {
     /*
      * Authenticate with STC.
      */
+    /*
     const context = await authenticateStc(
         browser
-    );
+    );*/
+    const aramcoUrl = "https://career-sa20.hr.cloud.sap/career?company=saudiara05&site=VjItRGhPbyt6YkR2WW9wWVZVL2xmT29ZZz09&lang=en_US&login_ns=login&loginFlowRequired=true";
+    const authPath = "./data/aramco-auth.json";
+    const context =
+        await authenticate(
+            browser,
+            {
+                company: "Aramco",
+                loginUrl: aramcoUrl,
+                authPath,
+            }
+        );
 
     const page = context.pages()[0];
 
