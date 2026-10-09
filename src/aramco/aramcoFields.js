@@ -16,57 +16,56 @@ function mapGender(gender) {
 
 export const ATTACHMENT_FIELDS = [
     {
-        type: "file",
         selector: ARAMCO_SELECTORS.resume,
-        key: "cvPdfPath",
+        key: "cvPdf",
+        label: "Resume/CV",
     },
     {
-        type: "file",
         selector: ARAMCO_SELECTORS.coverLetter,
-        key: "coverLetterPath",
+        key: "coverLetter",
+        label: "Cover Letter",
     },
     {
-        type: "file",
         selector: ARAMCO_SELECTORS.nationalIdCopy,
-        key: "nationalIdCopyPath",
+        key: "nationalIdCopy",
+        label: "National ID Copy",
     },
     {
-        type: "file",
         selector: ARAMCO_SELECTORS.certificates,
-        key: "certificatesPath",
+        key: "certificates",
+        label: "Certificates",
     },
     {
-        type: "file",
         selector: ARAMCO_SELECTORS.transcripts,
-        key: "transcriptsPath",
+        key: "transcripts",
+        label: "Transcripts",
     },
     {
-        type: "file",
         selector: ARAMCO_SELECTORS.driversLicense,
-        key: "driversLicensePath",
+        key: "driversLicense",
+        label: "Driver's License",
     },
     {
-        type: "file",
         selector: ARAMCO_SELECTORS.familyBooklet,
-        key: "familyBookletPath",
+        key: "familyBooklet",
+        label: "Family Booklet",
     },
     {
-        type: "file",
         selector: ARAMCO_SELECTORS.studentId,
-        key: "studentIdPath",
+        key: "studentId",
+        label: "Student ID",
     },
     {
-        type: "file",
         selector: ARAMCO_SELECTORS.experienceLetters,
-        key: "experienceLettersPath",
+        key: "experienceLetters",
+        label: "Experience Letters",
     },
     {
-        type: "file",
         selector: ARAMCO_SELECTORS.disabilityCertificate,
-        key: "disabilityCertificatePath",
+        key: "disabilityCertificate",
+        label: "Disability Certificate",
     },
 ];
-
 
 export const PROFILE_FIELDS = [
     // Names
@@ -78,17 +77,12 @@ export const PROFILE_FIELDS = [
     {
         type: "input",
         selector: ARAMCO_SELECTORS.middleName,
-        key: "secondName",
+        key: "middleName",
     },
     {
         type: "input",
         selector: ARAMCO_SELECTORS.lastName,
         key: "lastName",
-    },
-    {
-        type: "input",
-        selector: ARAMCO_SELECTORS.grandFatherName,
-        key: "thirdName",
     },
 
     // Arabic Names
@@ -100,7 +94,7 @@ export const PROFILE_FIELDS = [
     {
         type: "input",
         selector: ARAMCO_SELECTORS.arabicMiddleName,
-        key: "arabicSecondName",
+        key: "arabicMiddleName",
     },
     {
         type: "input",
@@ -110,7 +104,14 @@ export const PROFILE_FIELDS = [
     {
         type: "input",
         selector: ARAMCO_SELECTORS.arabicGrandFatherName,
-        key: "arabicThirdName",
+        key: "arabicGrandFatherName",
+    },
+
+
+    {
+        type: "input",
+        selector: ARAMCO_SELECTORS.grandFatherName,
+        key: "grandFatherName",
     },
 
     // Disability
