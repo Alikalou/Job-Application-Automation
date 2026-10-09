@@ -17,26 +17,24 @@ export async function uploadFile(
 
     console.log(`Found ${label} field.`);
 
-    /*
-     * Check whether this field already
-     * contains an uploaded file.
-     */
     const existingUpload = field.locator(
-        STC_SELECTORS.uploadSuccess
+        STC_SELECTORS.removeAttachmentButton
     );
 
-    if (await existingUpload.isVisible()) {
-        console.log(
-            `${label} already uploaded. Skipping.`
+    if (await existingUpload.count() > 0) {
+        await removeExistingFile(
+            page,
+            fieldSelector,
+            label
         );
-
-        return;
     }
 
-    /*
-     * No existing file, so upload it.
-     */
-    const addButton = field.locator(
+    // Re-resolve after possible removal/rerender
+    const currentField = page
+        .locator(fieldSelector)
+        .first();
+
+    const addButton = currentField.locator(
         STC_SELECTORS.addAttachmentButton
     );
 
@@ -51,11 +49,62 @@ export async function uploadFile(
         timeout: 10_000,
     });
 
-    await fileInput.setInputFiles(
-        filePath
+    await fileInput.setInputFiles(filePath);
+
+    // SuccessFactors may rebuild the attachment component,
+    // so resolve it again after uploading.
+    const uploadedField = page
+        .locator(fieldSelector)
+        .first();
+
+    const removeButton = uploadedField.locator(
+        STC_SELECTORS.removeAttachmentButton
     );
+
+    await removeButton.waitFor({
+        state: "visible",
+        timeout: 15_000,
+    });
 
     console.log(
         `${label} uploaded successfully.`
+    );
+}
+async function removeExistingFile(
+    page,
+    fieldSelector,
+    label
+) {
+    const field = page
+        .locator(fieldSelector)
+        .first();
+
+    const removeButton = field.locator(
+        STC_SELECTORS.removeAttachmentButton
+    );
+
+    if (await removeButton.count() === 0) {
+        return;
+    }
+
+    console.log(
+        `Existing ${label} found. Removing it...`
+    );
+
+    await removeButton.click();
+
+    const confirmButton = page.locator(
+        STC_SELECTORS.confirmDeleteButton
+    );
+
+    await confirmButton.waitFor({
+        state: "visible",
+        timeout: 10_000,
+    });
+
+    await confirmButton.click();
+
+    console.log(
+        `Existing ${label} removed.`
     );
 }

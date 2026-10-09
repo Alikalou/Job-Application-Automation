@@ -9,9 +9,11 @@ import { authenticate } from "./auth.js";
 import { getStcJobs } from "./companies/stc.js";
 import { parseCv } from "./parseCv.js";
 import { applicantDetails } from "../data/applicant.js";
+import { aramcoApplicant } from "../data/aramcoApplicant.js";
 import { matchJob } from "./matchJob.js";
 import { applyToStcJob } from "./stc/stcApplicationAgent.js";
-import { handleCandidateProfile } from "./stc/stcForm.js";
+//import { handleCandidateProfile } from "./stc/stcForm.js";
+import { handleCandidateProfile } from "./aramco/handleAramcoCandidateProfile.js";
 import { generateCoverLetter } from "./coverLetter.js";
 import { saveRunLog, buildRunLog } from "./logging.js";
 
@@ -45,65 +47,56 @@ try {
         "1. Authentication finished."
     );
 
-
-    /*
-     * Resolve applicant file paths.
-     */
-    const cvTextPath = path.join(
+    const DATA_DIR = path.join(
         process.cwd(),
-        "data",
-        "cv.txt"
+        "data"
     );
 
-    const cvPdfPath = path.join(
-        process.cwd(),
-        "data",
-        "cv.pdf"
-    );
+    const APPLICANT_FILES = {
+        cvText: path.join(
+            DATA_DIR,
+            "cv.txt"
+        ),
 
-    const coverLetterPath = path.join(
-        process.cwd(),
-        "data",
-        "cover letter.pdf"
-    );
+        cvPdf: path.join(
+            DATA_DIR,
+            "cv.pdf"
+        ),
 
+        coverLetter: path.join(
+            DATA_DIR,
+            "cover letter.pdf"
+        ),
 
-    /*
-     * Read and parse CV.
-     */
-    console.log("2. Reading CV...");
+        transcripts: path.join(
+            DATA_DIR,
+            "transcript.pdf"
+        ),
+
+        nationalIdCopy: path.join(
+            DATA_DIR,
+            "identity card.pdf"
+        ),
+    };
 
     const cvText = await fs.readFile(
-        cvTextPath,
+        APPLICANT_FILES.cvText,
         "utf8"
-    );
-
-    console.log(
-        "3. CV read successfully."
-    );
-
-    console.log(
-        "4. Parsing CV with AI..."
     );
 
     const parsedCv = await parseCv(
         cvText
     );
 
-    console.log(
-        "5. CV parsed successfully."
-    );
-
-
     /*
      * Create applicant object.
      */
     const applicant = {
         cv: parsedCv,
-        personal: applicantDetails.personal,
-        languages: applicantDetails.languages,
+        personal: aramcoApplicant.personal,
+        languages: aramcoApplicant.languages,
         stcSpecific: applicantDetails.stcSpecific,
-        cvPdfPath,
+        files: APPLICANT_FILES,
     };
 
     console.log(

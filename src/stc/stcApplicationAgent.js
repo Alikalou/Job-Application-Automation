@@ -26,10 +26,7 @@ export async function applyToStcJob(
     const page = await context.newPage();
 
     try {
-        console.log(
-            `Applying to: ${job.title}`
-        );
-
+        console.log(`Applying to: ${job.title}`);
 
         /*
          * Open STC job page.

@@ -1,7 +1,7 @@
 import { uploadFile } from "./stcFileUploader.js";
 import { EDUCATION_FIELDS, PROFILE_FIELDS, JOB_SPECIFIC_FIELDS, LANGUAGE_FIELDS } from "./stcFields.js";
 import { STC_SELECTORS } from "./stcSelectors.js";
-import { ensureLanguageRows, saveApplicationForm, expandAllSections } from "./helper.js";
+import { saveApplicationForm, expandAllSections } from "./helper.js";
 import { fillField } from "./stcFieldHandlers.js";
 
 export async function handleCandidateProfile(

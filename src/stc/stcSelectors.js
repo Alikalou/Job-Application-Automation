@@ -119,10 +119,16 @@ export const STC_SELECTORS = {
         'span.addAttachments[role="button"]',
 
     fileInput:
-        'input[type="file"].fileUpload',
+        'input[type="file"].fileUpload:not([disabled])',
 
     uploadSuccess:
-        '.attachSuccessIcon',
+        '.attachSuccessIcon:visible',
+
+    removeAttachmentButton:
+        ".removeAttachments",
+
+    confirmDeleteButton:
+        'button[name="OK"]',
 
     // -------------------------
     // Language

@@ -1,9 +1,4 @@
-export async function fillField(
-    page,
-    field,
-    applicant,
-    index = 0
-) {
+export async function fillField(page, field, applicant, index = 0) {
     let value = applicant[field.key];
 
     if (value === undefined || value === null || value === "") {
@@ -16,7 +11,6 @@ export async function fillField(
     if (field.transform) {
         value = field.transform(value);
     }
-
 
     switch (field.type) {
         case "input":
@@ -88,7 +82,6 @@ async function fillInput(
         `Current value: "${await input.inputValue()}"`
     );
 }
-
 
 async function fillCombobox(
     page,
