@@ -1,9 +1,10 @@
 import { chromium } from "playwright";
+import dotenv from "dotenv";
+dotenv.config();
 
-const BASE_URL = "https://careers.stc.com.sa";
+const STC_BASE_URL = process.env.STC_BASE_URL;
 
-const FIRST_PAGE_URL =
-    `${BASE_URL}/go/All-Jobs-Except-JAP/7754423/?q=&sortColumn=referencedate&sortDirection=desc`;
+const FIRST_PAGE_URL = `${STC_BASE_URL}${process.env.STC_JOBS_PATH}`;
 
 const relevantTitles = [
     "software",
