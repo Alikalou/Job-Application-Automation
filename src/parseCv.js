@@ -55,7 +55,7 @@ export async function parseCv(cvText) {
                 }
             ],
 
-            "experience": [
+            "employment": [
                 {
                     "title": string | null,
                     "company": string | null,
