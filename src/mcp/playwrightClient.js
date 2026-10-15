@@ -8,9 +8,14 @@ export async function createPlaywrightClient() {
         version: "1.0.0",
     });
 
+    //The communication can be done here over the standard input/output library or using HTTP.
     const transport = new StdioClientTransport({
         command: "npx",
-        args: ["-y", "@playwright/mcp@latest"],
+        args: ["-y",
+            "@playwright/mcp@latest",
+            "--timeout-action=30000",
+            "--timeout-navigation=60000",
+            "--timeout-settle=1000"],
         stderr: "inherit",
     });
 
